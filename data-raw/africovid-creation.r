@@ -112,5 +112,52 @@ for( i in 1:length(ds))
 #saving the data object for all countries
 dfhera <- dfall
 
+# unique(dfhera$PAYS)
+# [1] "Nigéria"      "Ghana"        "Mali"         "Niger"        "Mauritanie"   "Sénégal"      "Gambie"
+# [8] "Togo"         "Bénin"        "Burkina Faso"
+
+names(dfhera)
+# [1] "ID"                            "DATE"                          "ISO_3"
+# [4] "PAYS"                          "ID_PAYS"                       "REGION"
+# [7] "ID_REGION"                     "CONTAMINES"                    "DECES"
+# [10] "GUERIS"                        "CONTAMINES_FEMME"              "CONTAMINES_HOMME"
+# [13] "CONTAMINES_GENRE_NON_SPECIFIE" "SOURCE"
+
+#convert dates to useable format
+library(lubridate)
+dfhera$date <- lubridate::dmy(dfhera$DATE)
+
+#convert numeric columns to numeric - seesm this shouldn't be necessary, tibble attributes indicate col_double()
+dfhera$CONTAMINES <- as.numeric(dfhera$CONTAMINES)
+dfhera$DECES <- as.numeric(dfhera$DECES)
+dfhera$GUERIS <- as.numeric(dfhera$GUERIS)
+dfhera$CONTAMINES_FEMME <- as.numeric(dfhera$CONTAMINES_FEMME)
+dfhera$CONTAMINES_HOMME <- as.numeric(dfhera$CONTAMINES_HOMME)
+dfhera$CONTAMINES_GENRE_NON_SPECIFIE <- as.numeric(dfhera$CONTAMINES_GENRE_NON_SPECIFIE)
+
+##add countrycodes & english names
+
+# library(countrycode)
+# TODO can't convert from french destination ?? maybe I can use afrilearndata ?? & optionally fuzzyjoin
+# dfhera$iso3c <- countrycode(dfhera$PAYS, origin = 'country.name.fr', destination = 'iso3c')
+# Error in countrycode(dfhera$PAYS, origin = "country.name.fr", destination = "iso3c") :
+#   Origin code not supported by countrycode or present in the user-supplied custom_dict.
+
+library(fuzzyjoin)
+library(afrilearndata)
+library(sf)
+
+#create dataframe of nam, name_fr & iso_a3
+df1 <- dplyr::select(sf::st_drop_geometry(africountries), c(name,iso_a3,name_fr))
+
+#test whether standard antijoin & fuzzyjoin copes with all the French names, should return 0 rows
+anti_join(dfhera, df1, by=c(PAYS='name_fr'))
+#stringdist_anti_join(dfhera, df1, by=c(PAYS='name_fr')) #, mode='left')
+
+#arg stringdist_join matches Nigeria & Liberia !! detect by more rows in the df
+#df2 <- stringdist_left_join(dfhera, df1, by=c(PAYS='name_fr')) #, mode='left')
+
+#standard left join works
+dfhera <- left_join(dfhera, df1, by=c(PAYS='name_fr')) #, mode='left')
 
 usethis::use_data(dfhera, overwrite = TRUE)
