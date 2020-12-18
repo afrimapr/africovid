@@ -4,7 +4,7 @@
 #' to show cases or deaths
 #'
 #' @param country a character vector of country names or iso3c character codes.
-#' @param attribute attribute to plot
+#' @param attribute attribute to plot, from dfhera
 #' @param language 'which admin level to return'en' or 'fr' for country name
 # @param plot
 #'
@@ -40,7 +40,7 @@ afcov_heatmap <- function(country,
 
   month_breaks <- as.Date(lubridate::parse_date_time(c("2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12"), orders="ym"))
 
-  ggplot2::ggplot(dfcountry, aes(x=date, y=REGION, fill=CONTAMINES))+
+  ggplot2::ggplot(dfcountry, aes_string(x='date', y='REGION', fill=as.name(attribute)))+
     geom_tile(colour="White")+
     theme_classic()+
     #scale_fill_distiller(palette="Spectral") +
