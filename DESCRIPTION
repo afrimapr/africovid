@@ -1,0 +1,15 @@
+Package: africovid
+Title: Visualisation of Sub-National Covid Data for Africa
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Andy",
+           family = "South",
+           role = c("aut", "cre"),
+           email = "southandy@gmail.com",
+           comment = c(ORCID = "0000-0003-4051-6135"))
+Description: Visualisation of Sub-National Covid Data for Africa
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
