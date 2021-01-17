@@ -24,25 +24,23 @@ set_rhdx_config(hdx_site = "prod")
 get_rhdx_config()
 
 #modified example from readme
-df2 <- search_datasets("hera", rows = 2) %>%
-  pluck(1) %>% ## select the first dataset
-  get_resource(2) %>% ## 2nd resource is csv
-  read_resource(delim=';')
-
-#Ahmadou example from issue 8
-pull_dataset("mauritania_covid19_subnational") %>%
-  get_resources(format = "csv") %>%
-  pluck(1) %>%
-  read_resource(delim = ";", locale = locale(decimal_mark = ","))
-
+# df2 <- search_datasets("hera", rows = 2) %>%
+#   pluck(1) %>% ## select the first dataset
+#   get_resource(2) %>% ## 2nd resource is csv
+#   read_resource(delim=';')
+#
+# #Ahmadou example from issue 8
+# pull_dataset("mauritania_covid19_subnational") %>%
+#   get_resources(format = "csv") %>%
+#   pluck(1) %>%
+#   read_resource(delim = ";", locale = locale(decimal_mark = ","))
 
 
 # this does return hera datasets
-ds <- search_datasets("hera", rows=99)
+#ds <- search_datasets("hera", rows=99)
 
-#default returns 10
 
-#this returns 21 subnational datasets
+#this returns 21 subnational datasets (2020-12-14 & 2021-01-17)
 ds <- search_datasets("hera subnational", rows=99)
 
 #trying to read them all into single dataframe
@@ -65,7 +63,8 @@ for( i in 1:length(ds))
   #df1 <- get_resource(ds[[i]], 2) %>% ## 2nd resource is csv
   df1 <- get_resources(ds[[i]], format = "csv") %>%
     pluck(1) %>% ## select the first csv
-    read_resource(delim = ";", locale = locale(decimal_mark = ",")) # read into R
+    # read into R, force_download to make sure get latest version
+    read_resource(delim = ";", locale = locale(decimal_mark = ","), force_download = TRUE)
 
   #should work too
   #get_resources(format = "csv") %>%
@@ -148,7 +147,9 @@ library(afrilearndata)
 library(sf)
 
 #create dataframe of nam, name_fr & iso_a3
-df1 <- dplyr::select(sf::st_drop_geometry(africountries), c(name,iso_a3,name_fr))
+#df1 <- dplyr::select(sf::st_drop_geometry(africountries), c(name,iso_a3,name_fr))
+df1 <- dplyr::select(sf::st_drop_geometry(africountries), c(name,iso_a3))
+names(df1)[1] <- 'name_en'
 
 #test whether standard antijoin & fuzzyjoin copes with all the French names, should return 0 rows
 anti_join(dfhera, df1, by=c(PAYS='name_fr'))
@@ -157,7 +158,10 @@ anti_join(dfhera, df1, by=c(PAYS='name_fr'))
 #arg stringdist_join matches Nigeria & Liberia !! detect by more rows in the df
 #df2 <- stringdist_left_join(dfhera, df1, by=c(PAYS='name_fr')) #, mode='left')
 
-#standard left join works
-dfhera <- left_join(dfhera, df1, by=c(PAYS='name_fr')) #, mode='left')
+#standard left join works based on either name_fr safer to use ISO_3
+#dfhera <- left_join(dfhera, df1, by=c(PAYS='name_fr')) #, mode='left')
+dfhera <- left_join(dfhera, df1, by=c(ISO_3='iso_a3')) #, mode='left')
+
+
 
 usethis::use_data(dfhera, overwrite = TRUE)
