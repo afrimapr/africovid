@@ -162,6 +162,22 @@ anti_join(dfhera, df1, by=c(PAYS='name_fr'))
 #dfhera <- left_join(dfhera, df1, by=c(PAYS='name_fr')) #, mode='left')
 dfhera <- left_join(dfhera, df1, by=c(ISO_3='iso_a3')) #, mode='left')
 
+# checking and correcting a few negative values
+# 3 rows with negative values
+# the one for Benin messes up Benin plot
+dfneg <- dfhera[which(dfhera$CONTAMINES < 0),]
 
+# ID DATE  ISO_3 PAYS  ID_PAYS REGION ID_REGION CONTAMINES DECES GUERIS CONTAMINES_FEMME CONTAMINES_HOMME
+# 2276 23/0~ GHA   Ghana       4 Bono          40         -4    NA      0               NA               NA
+# 3575 08/1~ GHA   Ghana       4 Great~        30        -44    NA    -15               NA               NA
+#  845 19/0~ BEN   Bénin      10 Non s~       108       -209     0    -26               NA               NA
+
+# here I assume that the neg symbol shouldn't be there so I remove it
+negs <- which(dfhera$CONTAMINES < 0)
+dfhera$CONTAMINES[negs] <- abs(dfhera$CONTAMINES[negs])
+negs <- which(dfhera$GUERIS < 0)
+dfhera$GUERIS[negs] <- abs(dfhera$GUERIS[negs])
+negs <- which(dfhera$CONTAMINES_GENRE_NON_SPECIFIE < 0)
+dfhera$CONTAMINES_GENRE_NON_SPECIFIE[negs] <- abs(dfhera$CONTAMINES_GENRE_NON_SPECIFIE[negs])
 
 usethis::use_data(dfhera, overwrite = TRUE)
