@@ -9,6 +9,8 @@ library(shiny)
 library(leaflet)
 library(remotes)
 
+library(africovid)
+
 # could give language option for fr too
 #sort(unique(dfhera$PAYS))
 countries <- sort(unique(dfhera$name_en))
