@@ -7,6 +7,7 @@
 #' @param attribute attribute to plot, from dfhera
 # @param att_title to include in the title - allows first go at language conversion from app
 #' @param language 'which admin level to return'en' or 'fr' for country name
+#' @param legend.position default "top", options "left","right","bottom"
 # @param plot
 #'
 #'
@@ -22,7 +23,8 @@
 afcov_heatmap <- function(country,
                           attribute = 'CONTAMINES',
                           #att_title = 'cases',
-                          language = 'en'
+                          language = 'en',
+                          legend.position="top"
                          )
 {
 
@@ -53,9 +55,11 @@ afcov_heatmap <- function(country,
     #scale_fill_viridis_c()+
     scale_x_date(name="Date", expand=c(0,0), breaks=month_breaks, date_labels = "%b")+ #%b 3 char month, %B full month name
     scale_fill_distiller(palette="YlGnBu", direction=1, na.value='white') +
-    labs(title=paste("Timelines for COVID-19 ",attribute,",",country),
+    labs(title=paste("COVID-19 ",country),
+    #labs(title=paste("COVID-19 ",attribute,",",country),
          #subtitle=paste0(""),
          caption="Data from @HeraAfrica via @humdata | Plot by @afrimapr")+
-    theme(axis.line.y=element_blank())
+    theme(axis.line.y=element_blank(),
+          legend.position = legend.position)
 
 }

@@ -4,7 +4,12 @@
 \alias{afcov_heatmap}
 \title{plot heatmap of subnational covid data}
 \usage{
-afcov_heatmap(country, attribute = "CONTAMINES", language = "en")
+afcov_heatmap(
+  country,
+  attribute = "CONTAMINES",
+  language = "en",
+  legend.position = "top"
+)
 }
 \arguments{
 \item{country}{a character vector of country names or iso3c character codes.}
@@ -12,6 +17,8 @@ afcov_heatmap(country, attribute = "CONTAMINES", language = "en")
 \item{attribute}{attribute to plot, from dfhera}
 
 \item{language}{'which admin level to return'en' or 'fr' for country name}
+
+\item{legend.position}{default "top", options "left","right","bottom"}
 }
 \value{
 \code{ggplot}
