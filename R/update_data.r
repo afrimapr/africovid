@@ -11,7 +11,7 @@
 # @examples
 # update_data()
 #'
-#' @return not sure yet
+#' @return dataframe
 # @importFrom ggplot2 ggplot aes_string geom_tile theme_classic labs scale_fill_distiller scale_x_date theme element_blank
 #' @importFrom lubridate parse_date_time dmy
 #' @importFrom rhdx set_rhdx_config get_rhdx_config search_datasets get_resources read_resource
@@ -130,14 +130,15 @@ update_data <- function()
   ##add countrycodes & english names
 
   # library(countrycode)
-  # TODO can't convert from french destination ?? maybe I can use afrilearndata ?? & optionally fuzzyjoin
+  # this doesn't work to convert from french destination
+  # below I use afrilearndata instead
   # dfhera$iso3c <- countrycode(dfhera$PAYS, origin = 'country.name.fr', destination = 'iso3c')
   # Error in countrycode(dfhera$PAYS, origin = "country.name.fr", destination = "iso3c") :
   #   Origin code not supported by countrycode or present in the user-supplied custom_dict.
 
-  library(fuzzyjoin)
-  library(afrilearndata)
-  library(sf)
+  # library(fuzzyjoin)
+  # library(afrilearndata)
+  # library(sf)
 
   #create dataframe of nam, name_fr & iso_a3
   #df1 <- dplyr::select(sf::st_drop_geometry(africountries), c(name,iso_a3,name_fr))

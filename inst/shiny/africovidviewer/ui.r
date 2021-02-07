@@ -61,7 +61,7 @@ fluidPage(
 
 
 
-    p("active development January 2021, v0.1\n"),
+    p("active development February 2021, v0.2\n"),
 
     #p("Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
     p("Open source ", a("R code", href="https://github.com/afrimapr/africovid", target="_blank")),

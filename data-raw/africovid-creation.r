@@ -1,6 +1,7 @@
 # africovid-creation.r
 
 # steps to create package & data
+# NOTE regular data update stuff now copied to update_data()
 
 # andy south
 
@@ -137,7 +138,8 @@ dfhera$CONTAMINES_GENRE_NON_SPECIFIE <- as.numeric(dfhera$CONTAMINES_GENRE_NON_S
 ##add countrycodes & english names
 
 # library(countrycode)
-# TODO can't convert from french destination ?? maybe I can use afrilearndata ?? & optionally fuzzyjoin
+# this doesn't work to convert from french destination
+# below I use afrilearndata instead
 # dfhera$iso3c <- countrycode(dfhera$PAYS, origin = 'country.name.fr', destination = 'iso3c')
 # Error in countrycode(dfhera$PAYS, origin = "country.name.fr", destination = "iso3c") :
 #   Origin code not supported by countrycode or present in the user-supplied custom_dict.
