@@ -8,7 +8,9 @@ afcov_heatmap(
   country,
   attribute = "CONTAMINES",
   language = "en",
-  legend.position = "top"
+  legend.position = "top",
+  date_legend = c("2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09",
+    "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03")
 )
 }
 \arguments{
@@ -19,6 +21,8 @@ afcov_heatmap(
 \item{language}{'which admin level to return'en' or 'fr' for country name}
 
 \item{legend.position}{default "top", options "left","right","bottom"}
+
+\item{date_legend}{axis breaks to appear in plots}
 }
 \value{
 \code{ggplot}

@@ -8,6 +8,7 @@
 # @param att_title to include in the title - allows first go at language conversion from app
 #' @param language 'which admin level to return'en' or 'fr' for country name
 #' @param legend.position default "top", options "left","right","bottom"
+#' @param date_legend axis breaks to appear in plots
 # @param plot
 #'
 #'
@@ -24,7 +25,8 @@ afcov_heatmap <- function(country,
                           attribute = 'CONTAMINES',
                           #att_title = 'cases',
                           language = 'en',
-                          legend.position="top"
+                          legend.position="top",
+                          date_legend=c("2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02","2021-03")
                          )
 {
 
@@ -46,7 +48,7 @@ afcov_heatmap <- function(country,
   #this heatmap by region of cases, loosely based on Colin Angus work looks good
   #TODO could add rolling 7 day averages to it
 
-  month_breaks <- as.Date(lubridate::parse_date_time(c("2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01"), orders="ym"))
+  month_breaks <- as.Date(lubridate::parse_date_time(date_legend, orders="ym"))
 
   ggplot2::ggplot(dfcountry, aes_string(x='date', y='REGION', fill=as.name(attribute)))+
     geom_tile(colour="White")+
