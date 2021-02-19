@@ -41,11 +41,11 @@ join_subnat_to_map <- function( country = 'senegal' )
   nameshera <- sort(nameshera)
 
   #library(waldo) #good job of displaying differences, but in text not v useful
-  tst1 <- waldo::compare(nameshera, namesgeob, max_diffs = Inf)
-  #this, used under, the hood may be more useful
-  tst2 <- diffobj::ses_dat(nameshera, namesgeob)
-  #also see daff which creates a 'patch' that can be applied
-  tst3 <- daff::diff_data(data.frame(nameshera), data.frame(namesgeob))
+  # tst1 <- waldo::compare(nameshera, namesgeob, max_diffs = Inf)
+  # #this, used under, the hood may be more useful
+  # tst2 <- diffobj::ses_dat(nameshera, namesgeob)
+  # #also see daff which creates a 'patch' that can be applied
+  # tst3 <- daff::diff_data(data.frame(nameshera), data.frame(namesgeob))
 
   #simpler approach may be just to rbind the nameshera & namesgeob,
   #& then leftjoin hera data to it which should add a nameshera column to the geob data
@@ -58,17 +58,17 @@ join_subnat_to_map <- function( country = 'senegal' )
 
   lookup_hera_geob <- cbind(data.frame(nameshera), data.frame(namesgeob))
 
+
+  return(lookup_hera_geob)
+
   # cool this does work for one country
-  dfhera2 <- dplyr::left_join(dfhera, lookup_hera_geob, by=c("REGION" = "nameshera"))
+  #dfhera2 <- dplyr::left_join(dfhera, lookup_hera_geob, by=c("REGION" = "nameshera"))
 
   # TODO maybe loop through by country present to create a master version of lookup_hera_geob
   # & first check that each works
 
+  #unique(dfhera$name_en)
 
-  #senegal - yes
-  #nigeria - yes
-
-  unique(dfhera$name_en)
   # country <- "Nigeria"
   # country <- "Ghana"
   # country <- "Niger"
@@ -149,9 +149,7 @@ join_subnat_to_map <- function( country = 'senegal' )
 
 
   #TODO create a loop to make a multicountry lookup file, excluding Ghana & Gambia
-
-
-
+  #maybe change the name of this function & call it
 
 
 
