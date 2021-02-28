@@ -7,7 +7,7 @@
 \format{
 \code{dataframe}
 
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 44827 rows and 16 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 66983 rows and 17 columns.
 }
 \source{
 \url{https://data.humdata.org/organization/hera-humanitarian-emergency-response-africa}

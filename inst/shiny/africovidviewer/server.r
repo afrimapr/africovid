@@ -36,6 +36,8 @@ function(input, output) {
 
   })
 
+
+
   #######################
   # table of raw data
   output$table_raw <- DT::renderDataTable({

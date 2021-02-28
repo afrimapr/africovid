@@ -5,15 +5,20 @@
 #'
 #' @param country a character vector of country names or iso3c character codes.
 #' @param attribute attribute to plot, from dfhera
+#' @param dates either 'all', 'last' or c(start,end) in format "2021-01-31"
 # @param att_title to include in the title - allows first go at language conversion from app
 #' @param language 'which admin level to return'en' or 'fr' for country name
 #' @param legend.position default "top", options "left","right","bottom"
+#' @param palette RColorBrewer palette options default="YlGnBu"
 #' @param date_legend axis breaks to appear in plots
 # @param plot
 #'
 #'
-# @examples
-# afcov_heatmap('Mali')
+#' @examples
+#'
+#' afcov_heatmap('Mali')
+#'
+#' afcov_heatmap('senegal', dates=c("2021-01-01","2021-04-01"))
 #'
 #' @return \code{ggplot}
 #' @importFrom ggplot2 ggplot aes_string geom_tile theme_classic labs scale_fill_distiller scale_x_date theme element_blank
@@ -23,27 +28,17 @@
 #'
 afcov_heatmap <- function(country,
                           attribute = 'CONTAMINES',
+                          dates = 'all',
                           #att_title = 'cases',
                           language = 'en',
                           legend.position="top",
+                          palette="YlGnBu",
                           date_legend=c("2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02","2021-03")
                          )
 {
 
-  #TODO allow date range to be specified (x axis month breaks will need to cope)
-
-  #TODO get this to cope with fuzzy country names
-
-  #could convert from assumed English name to iso3c/iso_a3 using countrycode but maybe keep dependencies down
-
-  if (language == 'en')
-  {
-    dfcountry <- dfhera[which(tolower(dfhera$name_en)==tolower(country)),]
-  } else
-  {
-    dfcountry <- dfhera[which(tolower(dfhera$PAYS)==tolower(country)),]
-  }
-
+  #subset by country & optionally date
+  dfcountry <- afcov(country=country, dates=dates, language=language)
 
   #this heatmap by region of cases, loosely based on Colin Angus work looks good
   #TODO could add rolling 7 day averages to it

@@ -7,8 +7,10 @@
 afcov_heatmap(
   country,
   attribute = "CONTAMINES",
+  dates = "all",
   language = "en",
   legend.position = "top",
+  palette = "YlGnBu",
   date_legend = c("2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09",
     "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03")
 )
@@ -18,9 +20,13 @@ afcov_heatmap(
 
 \item{attribute}{attribute to plot, from dfhera}
 
+\item{dates}{either 'all', 'last' or c(start,end) in format "2021-01-31"}
+
 \item{language}{'which admin level to return'en' or 'fr' for country name}
 
 \item{legend.position}{default "top", options "left","right","bottom"}
+
+\item{palette}{RColorBrewer palette options default="YlGnBu"}
 
 \item{date_legend}{axis breaks to appear in plots}
 }
@@ -30,4 +36,11 @@ afcov_heatmap(
 \description{
 *in progress
 to show cases or deaths
+}
+\examples{
+
+afcov_heatmap('Mali')
+
+afcov_heatmap('senegal', dates=c("2021-01-01","2021-04-01"))
+
 }
