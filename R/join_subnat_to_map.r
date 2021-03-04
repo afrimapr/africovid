@@ -1,6 +1,6 @@
 #' join subnational data to map of admin boundaries
 #'
-#' *in progress
+#' in progress
 #'
 #'
 #' @param country a character vector of country names or iso3c character codes.
@@ -12,7 +12,7 @@
 #'
 #' @return dataframe
 
-#' @importFrom sf st_drop_geometry
+# @importFrom sf st_drop_geometry
 #' @export
 #'
 #'

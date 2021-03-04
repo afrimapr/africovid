@@ -17,6 +17,13 @@ Depends:
     R (>= 2.10)
 Imports:
     ggplot2,
-    lubridate
+    lubridate,
+    dplyr,
+    countrycode,
+    rmapshaper,
+    afriadmin,
+    sf
 Suggests:
     shiny
+Remotes:
+    afrimapr/afriadmin 

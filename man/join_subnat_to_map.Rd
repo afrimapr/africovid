@@ -13,5 +13,5 @@ join_subnat_to_map(country = "senegal")
 dataframe
 }
 \description{
-*in progress
+in progress
 }

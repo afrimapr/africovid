@@ -12,7 +12,7 @@
 #'
 #' @return dataframe
 
-#' @importFrom sf st_drop_geometry
+# @importFrom sf st_drop_geometry
 #' @export
 #'
 join_all_subnat_to_map <- function( )

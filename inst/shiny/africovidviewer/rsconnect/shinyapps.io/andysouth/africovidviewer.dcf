@@ -5,8 +5,8 @@ account: andysouth
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3482803
-bundleId: 4111549
+bundleId: 4301727
 url: https://andysouth.shinyapps.io/africovidviewer/
-when: 1610962432.1844
+when: 1614889016.44647
 asMultiple: FALSE
 asStatic: FALSE
