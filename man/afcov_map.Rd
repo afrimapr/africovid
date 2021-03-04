@@ -33,3 +33,10 @@ afcov_map(
 *in progress
 to show cases or deaths
 }
+\examples{
+afcov_map('Mali')
+
+#a 6 daily facetted map
+afcov_map('senegal', dates=c("2021-01-01","2021-01-06"))
+
+}

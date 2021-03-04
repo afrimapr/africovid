@@ -20,7 +20,6 @@ zoom_view <- NULL
 # perhaps can just reset zoomed view to NULL when country is changed
 
 
-# Define a server for the Shiny app
 function(input, output) {
 
 
@@ -33,6 +32,31 @@ function(input, output) {
                                     attribute=input$covid_measure)
 
     gg1
+
+  })
+
+
+  ######################################
+  # map plot (not interactive)
+  # output$plot_map <- renderLeaflet({
+  output$plot_map <- renderPlot({
+
+    mapplot <- afcov_map(input$country,
+                         attribute=input$covid_measure)
+
+
+    # to retain zoom if only types have been changed
+    # if (!is.null(zoom_view))
+    # {
+    #   mapplot@map <- leaflet::fitBounds(mapplot@map, lng1=zoom_view$west, lat1=zoom_view$south, lng2=zoom_view$east, lat2=zoom_view$north)
+    # }
+
+    mapplot
+
+    #if interactive
+    #important that this returns the @map bit
+    #otherwise get Error in : $ operator not defined for this S4 class
+    #mapplot@map
 
   })
 

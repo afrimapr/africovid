@@ -13,14 +13,14 @@
 #'
 #' @return dataframe
 # @importFrom ggplot2 ggplot aes_string geom_tile theme_classic labs scale_fill_distiller scale_x_date theme element_blank
-#' @importFrom lubridate parse_date_time dmy
-#' @importFrom rhdx set_rhdx_config get_rhdx_config search_datasets get_resources read_resource
-#' @importFrom usethis use_data
-#' @importFrom magrittr %>%
-#' @importFrom purrr pluck
-#' @importFrom readr locale
-#' @importFrom dplyr select anti_join left_join
-#' @importFrom sf st_drop_geometry
+# @importFrom lubridate parse_date_time dmy
+# @importFrom rhdx set_rhdx_config get_rhdx_config search_datasets get_resources read_resource
+# @importFrom usethis use_data
+# @importFrom magrittr %>%
+# @importFrom purrr pluck
+# @importFrom readr locale
+# @importFrom dplyr select anti_join left_join
+# @importFrom sf st_drop_geometry
 #' @export
 #'
 #'

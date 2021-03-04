@@ -12,9 +12,8 @@
 # @examples
 # afcov('Mali')
 #'
-#' @return \code{ggplot}
-#' @importFrom ggplot2 ggplot aes_string geom_tile theme_classic labs scale_fill_distiller scale_x_date theme element_blank
-#' @importFrom lubridate parse_date_time
+#' @return dataframe
+# @importFrom lubridate parse_date_time
 #' @export
 #'
 #'

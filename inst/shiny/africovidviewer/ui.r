@@ -61,7 +61,7 @@ fluidPage(
 
 
 
-    p("active development February 2021, v0.2\n"),
+    p("active development March 2021, v0.3\n"),
 
     #p("Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
     p("Open source ", a("R code", href="https://github.com/afrimapr/africovid", target="_blank")),
@@ -82,8 +82,8 @@ fluidPage(
 
     #tabs
     tabsetPanel(type = "tabs",
-                #tabPanel("map", leafletOutput("serve_healthsites_map", height=800)),
                 tabPanel("heat map", plotOutput("plot_heatmap", height=600)),
+                tabPanel("map", plotOutput("plot_map", height=600)),
                 tabPanel("raw data", DT::dataTableOutput("table_raw"))
                 #tabPanel("WHO data", DT::dataTableOutput("table_raw_who"))
                 #tabPanel("about", NULL)

@@ -1,6 +1,5 @@
 #' conversion from country names to iso3c code
 #'
-#' #todo vectorise
 #'
 #' @param country a character vector of country names
 #'

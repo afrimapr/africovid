@@ -13,7 +13,7 @@ country2iso(country)
 character vector of iso3c codes
 }
 \description{
-#todo vectorise
+conversion from country names to iso3c code
 }
 \examples{
 

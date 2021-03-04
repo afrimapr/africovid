@@ -15,9 +15,10 @@
 #' @importFrom sf st_drop_geometry
 #' @export
 #'
-#' TODO change name of function
 join_all_subnat_to_map <- function( )
 {
+
+  # TODO change name of function
 
   iso3cs <- unique(dfhera$ISO_3)
 

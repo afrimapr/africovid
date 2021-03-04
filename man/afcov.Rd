@@ -14,7 +14,7 @@ afcov(country, language = "en", dates = "all")
 \item{dates}{either 'all', 'last' or c(start,end) in format "2021-01-31"}
 }
 \value{
-\code{ggplot}
+dataframe
 }
 \description{
 *in progress
