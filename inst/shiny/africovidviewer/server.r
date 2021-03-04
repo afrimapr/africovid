@@ -38,18 +38,11 @@ function(input, output) {
 
   ######################################
   # map plot (not interactive)
-  # output$plot_map <- renderLeaflet({
-  output$plot_map <- renderPlot({
+  # output$plot_map_latest <- renderLeaflet({
+  output$plot_map_latest <- renderPlot({
 
     mapplot <- afcov_map(input$country,
                          attribute=input$covid_measure)
-
-
-    # to retain zoom if only types have been changed
-    # if (!is.null(zoom_view))
-    # {
-    #   mapplot@map <- leaflet::fitBounds(mapplot@map, lng1=zoom_view$west, lat1=zoom_view$south, lng2=zoom_view$east, lat2=zoom_view$north)
-    # }
 
     mapplot
 
@@ -60,7 +53,17 @@ function(input, output) {
 
   })
 
+  ######################################
+  # last 6 days facetted map plot (not interactive)
+  output$plot_map_last6 <- renderPlot({
 
+    mapplot <- afcov_map(input$country,
+                         attribute=input$covid_measure,
+                         dates='last6days')
+
+    mapplot
+
+  })
 
   #######################
   # table of raw data

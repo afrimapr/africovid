@@ -83,7 +83,8 @@ fluidPage(
     #tabs
     tabsetPanel(type = "tabs",
                 tabPanel("heat map", plotOutput("plot_heatmap", height=600)),
-                tabPanel("map", plotOutput("plot_map", height=600)),
+                tabPanel("map latest", plotOutput("plot_map_latest", height=600)),
+                tabPanel("map last 6 days", plotOutput("plot_map_last6", height=600)),
                 tabPanel("raw data", DT::dataTableOutput("table_raw"))
                 #tabPanel("WHO data", DT::dataTableOutput("table_raw_who"))
                 #tabPanel("about", NULL)

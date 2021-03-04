@@ -45,7 +45,15 @@ afcov <- function(country,
 
       date_indices <- which(dfcountry$date==date_one)
 
-    } else if (length(dates)==2) #if start & end date
+    } else if (isTRUE(dates=='last6days'))
+    {
+      date_one <- max(dfcountry$date)
+
+      date_indices <- which(dfcountry$date > lubridate::date(date_one)-6 &
+                              dfcountry$date <= date_one )
+
+    }
+  else if (length(dates)==2) #if start & end date
     {
 
       date_indices <- which(dfcountry$date >= dates[1] &

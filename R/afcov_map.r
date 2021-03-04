@@ -53,9 +53,10 @@ afcov_map <- function(country,
 
   # done with ggplot to keep down dependencies (already using it in africovid package)
   # tmap would also be an option
-
+  # or mapview for interactive, but then facetting not possible
 
   #TODO allow summarising e.g. weekly monthly if multiple dates
+
 
   gg <- ggplot(sfadmin) +
     geom_sf(aes_string(fill = attribute)) +
