@@ -6,6 +6,7 @@
 #' @param country a character vector of country names or iso3c character codes.
 #' @param attribute attribute to plot, from dfhera
 #' @param dates either 'all', 'last' or c(start,end) in format "2021-01-31"
+#' @param timeinterval optional interval to sum over, options e.g. "5 days" "week" "month"
 # @param att_title to include in the title - allows first go at language conversion from app
 #' @param language 'which admin level to return 'en' or 'fr' for country name
 #' @param legend.position default "top", options "left","right","bottom"
@@ -30,6 +31,7 @@
 afcov_map <- function(country,
                           attribute = 'CONTAMINES',
                           dates = 'last',
+                          timeinterval=NULL,
                           #att_title = 'cases',
                           language = 'en',
                           legend.position="top",
@@ -40,7 +42,7 @@ afcov_map <- function(country,
 
 
   #subset by country & optionally date
-  dfdate <- afcov(country=country, dates=dates, language=language)
+  dfdate <- afcov(country=country, dates=dates, language=language, timeinterval=timeinterval)
 
   #join on to geoboundaries data
   #possibly save simplified version of geob sf objects in package
