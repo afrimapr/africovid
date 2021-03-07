@@ -4,8 +4,9 @@
 #'
 #' @param country a character vector of country names or iso3c character codes.
 # @param attribute attribute to plot, from dfhera
-#' @param dates either 'all', 'last' or c(start,end) in format "2021-01-31"
 #' @param language 'which admin level to return 'en' or 'fr' for country name
+#' @param dates either 'all', 'last' or c(start,end) in format "2021-01-31"
+#' @param timeinterval optional interval to sum over, options e.g. "5 days" "week" "month"
 # @param plot
 #'
 #'
@@ -21,11 +22,11 @@ afcov <- function(country,
                           #attribute = 'CONTAMINES',
                           #att_title = 'cases',
                           language = 'en',
-                          dates = 'all'
+                          dates = 'all',
+                          timeinterval = NULL
                          )
 {
 
-  #TODO move country subset into own function, shared with afcov_heatmap
 
   if (language == 'en')
   {
@@ -36,8 +37,6 @@ afcov <- function(country,
   }
 
 
-  # if (isFALSE(dates == "all"))
-  # {
 
     if (isTRUE(dates=='last'))
     {
@@ -76,6 +75,37 @@ afcov <- function(country,
     dfcountry <- dfcountry[date_indices,]
 
   #}
+
+    # optional aggregating of data by days weekd, months
+    # TODO need to identify all attribute variables to aggregate
+    # TODO try other time periods
+    # timeinterval <- "10 days"
+    # timeinterval <- "week"
+    # timeinterval <- "month"
+    #
+    if (! is.null(timeinterval))
+    {
+      dfcountry <- dfcountry %>%
+        group_by(namesgeob, date = ceiling_date(date, timeinterval)) %>%
+        summarize(CONTAMINES=sum(CONTAMINES, na.rm=TRUE),
+                  DECES=sum(DECES, na.rm=TRUE),
+                  GUERIS=sum(GUERIS, na.rm=TRUE),
+                  CONTAMINES_FEMME=sum(CONTAMINES_FEMME, na.rm=TRUE),
+                  CONTAMINES_HOMME=sum(CONTAMINES_HOMME, na.rm=TRUE),
+                  CONTAMINES_GENRE_NON_SPECIFIE=sum(CONTAMINES_GENRE_NON_SPECIFIE, na.rm=TRUE),
+                  days = n())
+    }
+
+    ""
+    # [10] "GUERIS"                        "CONTAMINES_FEMME"              "CONTAMINES_HOMME"
+    # [13] "CONTAMINES_GENRE_NON_SPECIFIE"
+
+    # dat %>%
+    #   group_by(decade=if_else(day(date) >= 30,
+    #                           floor_date(date, "20 days"),
+    #                           floor_date(date, "10 days"))) %>%
+    #   summarize(acum_rainfall=sum(rainfall),
+    #             days = n())
 
 
   invisible(dfcountry)

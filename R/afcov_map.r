@@ -64,6 +64,8 @@ afcov_map <- function(country,
     #scale_fill_viridis_c() +
     scale_fill_distiller(palette="YlGnBu", direction=1, na.value='white') +
     theme(legend.position = legend.position) +
+    labs(title=paste("COVID-19 ",country),
+           caption="Data from @HeraAfrica via @humdata | Plot by @afrimapr") +
     theme_void()
 
   # allowing facets if more than one date, this works
