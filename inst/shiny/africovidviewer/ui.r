@@ -50,15 +50,11 @@ fluidPage(
                                 "male cases" = "CONTAMINES_HOMME"),
                  selected = "CONTAMINES"),
 
-    #selection by admin regions
-    # checkboxInput("cboxadmin", "Select facilities by admin1 region"),
-    # conditionalPanel(
-    #   condition = "input.cboxadmin",
-    #
-    #   #first try it for admin1
-    #   uiOutput("select_admin")
+    #TODO prob need to move to server to get min&max dates for each country
+    # dateRangeInput('dateRange',
+    #                label = 'Date range for selected plots yyyy-mm-dd',
+    #                start = Sys.Date() - 2, end = Sys.Date() + 2
     # ),
-
 
 
     p("active development March 2021, v0.3\n"),
