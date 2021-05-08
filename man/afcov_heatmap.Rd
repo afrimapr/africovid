@@ -7,10 +7,12 @@
 afcov_heatmap(
   country,
   attribute = "CONTAMINES",
+  areanames = "namesgeob",
   dates = "all",
   language = "en",
   legend.position = "top",
   palette = "YlGnBu",
+  timeinterval = NULL,
   date_legend = c("2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09",
     "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03")
 )
@@ -20,6 +22,8 @@ afcov_heatmap(
 
 \item{attribute}{attribute to plot, from dfhera}
 
+\item{areanames}{name of column containing the area names ('namesgeob' added to match geoboundaries, 'REGION' is in raw data )}
+
 \item{dates}{either 'all', 'last' or c(start,end) in format "2021-01-31"}
 
 \item{language}{'which admin level to return'en' or 'fr' for country name}
@@ -27,6 +31,8 @@ afcov_heatmap(
 \item{legend.position}{default "top", options "left","right","bottom"}
 
 \item{palette}{RColorBrewer palette options default="YlGnBu"}
+
+\item{timeinterval}{optional interval to sum over, options e.g. "5 days" "week" "month"}
 
 \item{date_legend}{axis breaks to appear in plots}
 }

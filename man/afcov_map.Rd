@@ -8,6 +8,7 @@ afcov_map(
   country,
   attribute = "CONTAMINES",
   dates = "last",
+  timeinterval = NULL,
   language = "en",
   legend.position = "top",
   palette = "YlGnBu"
@@ -19,6 +20,8 @@ afcov_map(
 \item{attribute}{attribute to plot, from dfhera}
 
 \item{dates}{either 'all', 'last' or c(start,end) in format "2021-01-31"}
+
+\item{timeinterval}{optional interval to sum over, options e.g. "5 days" "week" "month"}
 
 \item{language}{'which admin level to return 'en' or 'fr' for country name}
 

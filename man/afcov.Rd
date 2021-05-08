@@ -4,7 +4,7 @@
 \alias{afcov}
 \title{to return subnational covid data by country and optionally date}
 \usage{
-afcov(country, language = "en", dates = "all")
+afcov(country, language = "en", dates = "all", timeinterval = NULL)
 }
 \arguments{
 \item{country}{a character vector of country names or iso3c character codes.}
@@ -12,6 +12,8 @@ afcov(country, language = "en", dates = "all")
 \item{language}{'which admin level to return 'en' or 'fr' for country name}
 
 \item{dates}{either 'all', 'last' or c(start,end) in format "2021-01-31"}
+
+\item{timeinterval}{optional interval to sum over, options e.g. "5 days" "week" "month"}
 }
 \value{
 dataframe
