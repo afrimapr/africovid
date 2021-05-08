@@ -9,6 +9,8 @@ library(remotes)
 library(leaflet)
 library(ggplot2)
 #library(patchwork) #for combining ggplots
+library(afriadmin) #used by afcov_map() trying to avoid download error on shinyapps
+                   #Cannot open "/vsizip/~/.cache/R/gb_cache/geoBoundariesSimplified-3_0_0-MLI-ADM1-shp.zip"; The file doesn't seem to exist.
 
 
 #global variables

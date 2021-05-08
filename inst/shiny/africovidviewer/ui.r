@@ -10,6 +10,8 @@ library(leaflet)
 library(remotes)
 
 library(africovid)
+library(rgeoboundaries) #think maybe this shouldn't be needed but seems to cause fail on shinyapps
+
 
 # could give language option for fr too
 #sort(unique(dfhera$PAYS))
@@ -30,6 +32,8 @@ fluidPage(
   sidebarLayout(
 
   sidebarPanel( width=3,
+
+    p("active development May 2021, not all options working yet, v0.4\n"),
 
     #p(tags$strong("There are 2 main sources for locations of > 100k hospital and health facilities in Africa. Neither is perfect.
     #  This app allows detailed comparison to inform pandemic response and allow improvement.")),
@@ -57,8 +61,6 @@ fluidPage(
     # ),
 
 
-    p("active development March 2021, v0.3\n"),
-
     #p("Contact : ", a("@southmapr", href="https://twitter.com/southmapr", target="_blank")),
     p("Open source ", a("R code", href="https://github.com/afrimapr/africovid", target="_blank")),
 
@@ -80,7 +82,7 @@ fluidPage(
     tabsetPanel(type = "tabs",
                 tabPanel("heat map", plotOutput("plot_heatmap", height=600)),
                 tabPanel("map latest", plotOutput("plot_map_latest", height=600)),
-                tabPanel("map last 6 days", plotOutput("plot_map_last6", height=600)),
+                tabPanel("map latest 6 days", plotOutput("plot_map_last6", height=600)),
                 tabPanel("raw data", DT::dataTableOutput("table_raw"))
                 #tabPanel("WHO data", DT::dataTableOutput("table_raw_who"))
                 #tabPanel("about", NULL)
