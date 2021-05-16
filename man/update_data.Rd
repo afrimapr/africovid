@@ -10,6 +10,7 @@ update_data()
 dataframe
 }
 \description{
+BEWARE code in africovid-creation.r is more up-to-date than this
 *in progress
 }
 \details{

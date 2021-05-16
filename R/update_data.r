@@ -1,5 +1,6 @@
 #' update package data from HERA via HDX
 #'
+#' BEWARE code in africovid-creation.r is more up-to-date than this
 #' *in progress
 #'
 #' will try to download data from HDX and use this to update locally the data stored in the package
@@ -27,21 +28,60 @@
 update_data <- function()
 {
 
+
   rhdx::set_rhdx_config(hdx_site = "prod")
   rhdx::get_rhdx_config()
 
   # this does return hera datasets
   #ds <- search_datasets("hera", rows=99)
 
-  #this returns 21 subnational datasets (2020-12-14 & 2021-01-17 & 2021-02-07)
-  ds <- rhdx::search_datasets("hera subnational", rows=99)
+  #21 subnational datasets (2020-12-14 & 2021-01-17)
+  #26 subnational datasets (2021-05-16)
+  ds <- search_datasets("hera subnational", rows=99)
+  #below returned 49 including city level datasets
+  #ds <- search_datasets("hera Coronavirus subnational", rows=99)
 
   #trying to read them all into single dataframe
 
+  #2021-01-17
   #11 Liberia has problems with DATE column, stops in May, doesn't have an ID column
   #15 is called a web app and fails to load
   #16 & later are cumulative for all Africa & different columns
-  to_exclude <- c(11,15,16,17,18,19,20,21)
+  #to_exclude <- c(11,15,16,17,18,19,20,21)
+
+  #2021-05-16 finding which datsets to include/exclude
+  #here sapply provides a simplified vector of all dataset titles
+  sapply(ds,function(x) x$data$title)
+
+  #which to exclude by visually inspecting list
+  to_exclude <- c(2,14,18:26)
+  # [1] "Nigeria: Coronavirus  (Covid-19) Subnational"
+  # [2] "Guinea: Ebola (2021) Subnational cases"
+  # [3] "Mali: Coronavirus (Covid-19) Subnational"
+  # [4] "Ghana: Coronavirus (Covid-19) Subnational"
+  # [5] "Niger: Coronavirus (Covid-19) Subnational"
+  # [6] "Mauritania: Coronavirus (Covid-19) Subnational"
+  # [7] "Senegal : Coronavirus (Covid-19) Subnational"
+  # [8] "Togo: Coronavirus (Covid-19) Subnational"
+  # [9] "Gambia: Coronavirus (Covid-19) Subnational"
+  # [10] "Bénin: Coronavirus (Covid-19) Subnational"
+  # [11] "Burkina Faso: Coronavirus (Covid-19) Subnational"
+  # [12] "Liberia: Coronavirus (Covid-19) Subnational"
+  # [13] "Guinea: Coronavirus (Covid-19) Subnational"
+  # [14] "Democratic Republic of the Congo: Ebola (2021) Subnational cases"
+  # [15] "Democratic Republic of the Congo: Coronavirus  (Covid-19) Subnational"
+  # [16] "Côte d'Ivoire: Coronavirus (Covid-19) Subnational"
+  # [17] "Sierra Leone: Coronavirus (Covid-19) Subnational"
+  # [18] "Africa: Coronavirus (COVID-19) Subnational Cases"
+  # [19] "Democratic Republic of the Congo : Ebola (2021) Cumulative cases (national)"
+  # [20] "Guinea: Ebola (2021) Cumulative cases (national)"
+  # [21] "Africa: Covid-19 Infections (National)"
+  # [22] "Africa: Covid-19 Cumulative Recoveries (National)"
+  # [23] "Africa: Covid-19 Cumulative infections (National)"
+  # [24] "Africa: Covid-19 Cumulative Deaths (National)"
+  # [25] "Africa: Covid-19 Recoveries (National)"
+  # [26] "Africa: Covid-19 Death cases (National)"
+
   ds <- ds[-to_exclude]
 
   dfall <- NULL
@@ -66,12 +106,14 @@ update_data <- function()
     #also gives this error, probably to do with dates
     #Error in as.POSIXlt.character(x, tz, ...) :
     #character string is not in a standard unambiguous format
+    #skip Liberia above
+    #2021-05-16 Cote d'Ivoire doesn't have an ID column either
     if (names(df1)[1]=='DATE')
     {
-      next #to miss out Liberia
+      #next #to miss out Liberia
       #df1 <- NULL #set to NULL to miss Liberia out for now
-      # dfid <- tibble(ID=1:nrow(df1))
-      # df1 <- cbind(dfid,df1)
+      dfid <- tibble(ID=1:nrow(df1))
+      df1 <- cbind(dfid,df1)
     }
 
     #some, but not all xls files, read rownames into first column
@@ -85,16 +127,55 @@ update_data <- function()
 
     #Benin stops in October and has different named columns, title case rather than upper case
     #patch to fix it
-    if ("Femme" %in% names(df1))
-      names(df1) <- names(dfall)
+    #if ("Femme" %in% names(df1))
+    #  names(df1) <- names(dfall)
 
     #remove this column that occurs in just some ds e.g Gambia
     if ('LIEN SOURCE' %in% names(df1))
       df1 <- dplyr::select(df1, !`LIEN SOURCE`)
 
+    #2021-05-16 senegal now has added vaccination columns, breaks reading into combined dataframe
+    #remove thos columns for now
+    if ("NOUVEAUX_INDIVIDUS_VACCINES" %in% names(df1))
+      df1 <- dplyr::select(df1, !"NOUVEAUX_INDIVIDUS_VACCINES")
+
+    if ("TOTAL_INDIVIDUS_VACCINES (1 dose)" %in% names(df1))
+      df1 <- dplyr::select(df1, !`TOTAL_INDIVIDUS_VACCINES (1 dose)`)
+
+    #remove these columns that appear just in some case Sierra Leone
+    if ('LIEN WEB' %in% names(df1))
+      df1 <- dplyr::select(df1, !`LIEN WEB`)
+
+    if ('x15' %in% names(df1))
+      df1 <- dplyr::select(df1, !`x15`)
+    if ('X15' %in% names(df1))
+      df1 <- dplyr::select(df1, !`X15`)
+
+    #2021-05-16 correcting fieldnames for Cote d'Ivoire
+    if ('Contaminés' %in% names(df1))
+      df1 <- dplyr::rename(df1, CONTAMINES = Contaminés)
+    if ('Décès' %in% names(df1))
+      df1 <- dplyr::rename(df1, DECES = Décès)
+    if ('Guéris' %in% names(df1))
+      df1 <- dplyr::rename(df1, GUERIS = Guéris)
+    if ('Femme' %in% names(df1))
+      df1 <- dplyr::rename(df1, CONTAMINES_FEMME = Femme)
+    if ('Homme' %in% names(df1))
+      df1 <- dplyr::rename(df1, CONTAMINES_HOMME = Homme)
+    if ("Genre_non spécifié" %in% names(df1))
+      df1 <- dplyr::rename(df1, CONTAMINES_GENRE_NON_SPECIFIE = `Genre_non spécifié`)
+
     #bind these country rows onto all country rows
     dfall <- rbind(dfall, df1)
   }
+
+
+  #2021-05-16 694 rows with NA for PAYS ISO_3 ID_PAYS etc., some are Nigeria
+  tstna <- filter(dfall,is.na(PAYS))
+  # TODO fill in these NAs
+  # for now filter out the NAs
+  dfall <- filter(dfall,!is.na(PAYS))
+
 
   #7 Gambia with csv
   # Warning: 1365 parsing failures.
@@ -175,6 +256,24 @@ update_data <- function()
   dfhera$CONTAMINES_GENRE_NON_SPECIFIE[negs] <- abs(dfhera$CONTAMINES_GENRE_NON_SPECIFIE[negs])
 
   #2021-02-07 dim(dfhera) 44827    16
+  #2021-05-16 dim(dfhera) 64986    16
+
+  #names(dfhera)
+  # [1] "ID"                            "DATE"                          "ISO_3"
+  # [4] "PAYS"                          "ID_PAYS"                       "REGION"
+  # [7] "ID_REGION"                     "CONTAMINES"                    "DECES"
+  # [10] "GUERIS"                        "CONTAMINES_FEMME"              "CONTAMINES_HOMME"
+  # [13] "CONTAMINES_GENRE_NON_SPECIFIE" "SOURCE"                        "date"
+  # [16] "name_en"
+
+  #to get country totals
+  #as.data.frame(table(dfhera$PAYS))
+
+  # joining geoboundaries subnat names on to make it easier to map regions
+  # BEWARE this uses dfhera that hasn't been saved to the package yet
+  dfhera2 <- join_all_subnat_to_map(dfhera)
+
+  dfhera <- dfhera2
 
   usethis::use_data(dfhera, overwrite = TRUE)
 

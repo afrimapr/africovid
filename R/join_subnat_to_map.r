@@ -56,7 +56,7 @@ join_subnat_to_map <- function( country = 'senegal' )
 
   #TODO check length of the 2 names objects they should be same
 
-  lookup_hera_geob <- cbind(data.frame(nameshera), data.frame(namesgeob))
+  lookup_hera_geob <- cbind(iso3c, data.frame(nameshera), data.frame(namesgeob))
 
 
   return(lookup_hera_geob)
@@ -150,6 +150,7 @@ join_subnat_to_map <- function( country = 'senegal' )
 
   #TODO create a loop to make a multicountry lookup file, excluding Ghana & Gambia
   #maybe change the name of this function & call it
+  #see join_all_subnat_to_map()
 
 
 

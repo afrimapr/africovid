@@ -4,7 +4,10 @@
 \alias{join_all_subnat_to_map}
 \title{join geoboundaries admin names onto the hera data to allow joining to a map later}
 \usage{
-join_all_subnat_to_map()
+join_all_subnat_to_map(dfhera)
+}
+\arguments{
+\item{dfhera}{can pass in progress dataframe containing the hera data}
 }
 \value{
 dataframe
