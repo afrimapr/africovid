@@ -44,8 +44,10 @@ afcov_heatmap <- function(country,
   #subset by country & optionally date
   dfcountry <- afcov(country=country, dates=dates, language=language, timeinterval=timeinterval)
 
-  #this heatmap by region of cases, loosely based on Colin Angus work looks good
+  # create year column for facet https://stackoverflow.com/questions/20571306/multi-row-x-axis-labels-in-ggplot-line-chart
+  dfcountry <- dplyr::mutate(dfcountry, year = as.factor(lubridate::year(date)))
 
+  #heatmap by region loosely based on Colin Angus work looks good
   month_breaks <- as.Date(lubridate::parse_date_time(date_legend, orders="ym"))
 
   ggplot2::ggplot(dfcountry, aes_string(x='date', y=areanames, fill=as.name(attribute)))+
@@ -54,11 +56,18 @@ afcov_heatmap <- function(country,
     #scale_fill_distiller(palette="Spectral") +
     #scale_fill_viridis_c()+
     scale_x_date(name="Date", expand=c(0,0), breaks=month_breaks, date_labels = "%b")+ #%b 3 char month, %B full month name
+
+    #add year facets - if included the switch would appear on lower axis
+    facet_grid(.~ year, space = 'free_x', scales = 'free_x') + #, switch = 'x') +
+    # remove facet spacing on x-direction
+    theme(panel.spacing.x = unit(0,"line")) +
+
     scale_fill_distiller(palette="YlGnBu", direction=1, na.value='white') +
     labs(title=paste("COVID-19 ",country),
     #labs(title=paste("COVID-19 ",attribute,",",country),
          #subtitle=paste0(""),
          caption="Data from @HeraAfrica via @humdata | Plot by @afrimapr")+
+    ylab(NULL)+
     theme(axis.line.y=element_blank(),
           legend.position = legend.position)
 
