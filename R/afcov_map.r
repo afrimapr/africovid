@@ -63,7 +63,7 @@ afcov_map <- function(country,
   gg <- ggplot(sfadmin) +
     geom_sf(aes_string(fill = attribute)) +
     #scale_fill_viridis_c() +
-    scale_fill_distiller(palette="YlGnBu", direction=1, na.value='white') +
+    scale_fill_distiller(palette=palette, direction=1, na.value='white') +
     theme(legend.position = legend.position) +
     labs(title=paste("COVID-19 ",country),
            caption="Data from @HeraAfrica via @humdata | Plot by @afrimapr") +
