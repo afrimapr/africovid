@@ -43,6 +43,7 @@ afcov_heatmap(
 \description{
 *in progress
 to show cases or deaths
+Initial ggplot code copied from https://github.com/VictimOfMaths/COVID-19/blob/master/Heatmaps/English\%20LA\%20Heatmaps.R
 }
 \examples{
 

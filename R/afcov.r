@@ -14,7 +14,8 @@
 # afcov('Mali')
 #'
 #' @return dataframe
-# @importFrom lubridate parse_date_time
+#' @importFrom lubridate parse_date_time ceiling_date
+#' @importFrom dplyr %>%
 #' @export
 #'
 #'

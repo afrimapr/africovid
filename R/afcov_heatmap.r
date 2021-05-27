@@ -2,6 +2,7 @@
 #'
 #' *in progress
 #' to show cases or deaths
+#' Initial ggplot code copied from https://github.com/VictimOfMaths/COVID-19/blob/master/Heatmaps/English%20LA%20Heatmaps.R
 #'
 #' @param country a character vector of country names or iso3c character codes.
 #' @param attribute attribute to plot, from dfhera
@@ -62,7 +63,7 @@ afcov_heatmap <- function(country,
     # remove facet spacing on x-direction
     theme(panel.spacing.x = unit(0,"line")) +
 
-    scale_fill_distiller(palette="YlGnBu", direction=1, na.value='white') +
+    scale_fill_distiller(palette=palette, direction=1, na.value='white') +
     labs(title=paste("COVID-19 ",country),
     #labs(title=paste("COVID-19 ",attribute,",",country),
          #subtitle=paste0(""),
